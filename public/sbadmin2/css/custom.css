@@ -1,0 +1,159 @@
+.page-item.active .page-link {
+    background-color: #E0E0E0!important;
+    color: #fff !important;
+    border-color: #E0E0E0!important;
+}
+
+.page-link {
+    color: #E0E0E0;
+}
+
+.border-left {
+    border-left: 0.25rem solid #E0E0E0!important;
+}
+
+.text-green {
+    color: #E0E0E0!important;
+}
+
+/* =================================================== */
+/* Kustomisasi Tombol Logout (Menghilangkan Outline) */
+/* =================================================== */
+
+/* =================================================== */
+/* Menghilangkan Background Biru pada Dropdown Items (Profile & Logout) */
+/* =================================================== */
+.user-dropdown-menu .dropdown-item:hover,
+.user-dropdown-menu .dropdown-item:focus,
+.user-dropdown-menu .dropdown-item:active {
+    background-color: transparent !important; /* HILANGKAN BACKGROUND BIRU */
+    color: inherit !important; /* Pertahankan warna teks default */
+    outline: none !important; /* Pastikan outline juga hilang */
+    box-shadow: none !important; /* Pastikan shadow juga hilang */
+}
+
+/* Pastikan juga tombol di dalam form (logout) tidak memiliki background biru */
+.user-dropdown-menu form.dropdown-item .btn-link.dropdown-item:hover,
+.user-dropdown-menu form.dropdown-item .btn-link.dropdown-item:focus,
+.user-dropdown-menu form.dropdown-item .btn-link.dropdown-item:active {
+    background-color: transparent !important; /* HILANGKAN BACKGROUND BIRU */
+    color: inherit !important; /* Pertahankan warna teks default */
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* =================================================== */
+/* Kustomisasi Tombol Logout (Menghilangkan Outline & Background Biru) - Ini bisa dihapus jika aturan di atas sudah cukup */
+/* =================================================== */
+
+.btn-logout:focus,
+.btn-logout:active,
+.btn-logout:hover {
+    outline: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    color: inherit !important;
+}
+
+
+@media (max-width: 767.98px) {
+    
+    .bars-menu{
+        color: #E0E0E0;
+    }
+
+    .bars-menu:hover{
+        color: #c9c9c9;
+    }
+
+    .bars-menu {
+        border: none !important; /* Menghilangkan border jika ada */
+        background-color: transparent !important; /* Memastikan background transparan */
+        outline: none !important; /* MENGHILANGKAN GARIS BIRU SAAT FOKUS/KLIK */
+        box-shadow: none !important; /* Menghilangkan shadow jika ada */
+    }
+
+    /* Jika ada lingkaran di sekitar tombol itu sendiri (bukan hanya outline) */
+    .bars-menu.rounded-circle {
+        background-color: transparent !important; /* Pastikan tidak ada warna background */
+    }
+
+    .user-dropdown-menu {
+        /* Mengurangi min-width agar lebih ringkas di mobile */
+        /* Jika Anda ingin lebih kecil lagi, coba 160px atau 180px */
+        min-width: 180px !important; 
+        
+        /* Pastikan lebar tidak terlalu besar dari viewport */
+        max-width: calc(100vw - 20px) !important; /* 100vw = 100% viewport width. Kurangi 20px untuk padding samping */
+        width: auto !important; /* Biarkan lebar menyesuaikan konten jika kurang dari min-width */
+
+        /* Penyesuaian posisi agar tidak melebar ke kanan */
+        /* Pastikan dropdown tetap terlihat di dalam layar */
+        right: 10px !important; /* Jarak dari tepi kanan layar */
+        left: auto !important;  /* Hapus penentuan 'left' bawaan */
+
+        /* Opsi: Jika ingin dropdownnya centered di mobile, gunakan ini (dan hapus right/left di atas) */
+        /*
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        */
+
+        /* Padding keseluruhan dropdown container */
+        padding: 0.5rem !important; /* Kurangi padding dari 10px menjadi 0.5rem (sekitar 8px) */
+    }
+
+    /* Penyesuaian untuk item di dalam dropdown */
+    .user-dropdown-menu .dropdown-item {
+        /* Padding yang lebih ringkas untuk setiap item menu */
+        padding: 0.5rem 0.75rem !important; /* Vertikal 8px, Horizontal 12px */
+        /* Ukuran font yang sedikit lebih kecil agar pas */
+        font-size: 0.875rem !important; /* Sekitar 14px */
+    }
+
+    /* Penyesuaian untuk badge role (admin/user) */
+    .user-dropdown-menu .badge {
+        font-size: 0.75rem !important; /* Sekitar 12px */
+        padding: 0.3em 0.7em !important; /* Padding yang lebih kecil */
+        margin-bottom: 0.5rem !important; /* Sesuaikan margin bawah */
+    }
+
+    /* Penyesuaian untuk gambar profile di navbar (avatar) */
+    .img-profile {
+        width: 30px !important; /* Mungkin 30px atau 32px lebih pas di mobile */
+        height: 30px !important;
+    }
+
+    /* Penyesuaian untuk nama user di navbar (jika d-none d-lg-inline tidak menyembunyikannya sepenuhnya) */
+    .nav-link span.d-none.d-lg-inline {
+        font-size: 0.8rem !important; /* Contoh, jika ingin lebih kecil lagi */
+        /* Properti d-none d-lg-inline seharusnya menyembunyikannya sepenuhnya di mobile, tapi ini sebagai fallback */
+    }
+
+    /* Penyesuaian untuk dropdown-divider */
+    .user-dropdown-menu .dropdown-divider {
+        margin: 0.5rem 0 !important; /* Kurangi margin di sekitar divider */
+    }
+
+    /* Penyesuaian padding untuk tombol logout jika menggunakan form */
+    .user-dropdown-menu form.dropdown-item .btn-link.dropdown-item {
+        padding: 0.5rem 0.75rem !important; /* Sesuaikan dengan padding dropdown-item */
+    }
+}
+
+/* Opsi: Jika Anda ingin ukuran yang berbeda untuk ponsel yang sangat kecil (misalnya di bawah 400px) */
+@media (max-width: 400px) {
+    .user-dropdown-menu {
+        min-width: 150px !important; /* Lebih kecil lagi */
+        right: 5px !important;
+    }
+    .user-dropdown-menu .dropdown-item {
+        font-size: 0.8rem !important; /* Font lebih kecil lagi */
+        padding: 0.4rem 0.6rem !important;
+    }
+    .user-dropdown-menu .badge {
+        font-size: 0.7rem !important;
+        padding: 0.2em 0.5em !important;
+    }
+}
+
+
