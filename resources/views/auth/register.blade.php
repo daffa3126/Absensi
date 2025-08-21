@@ -3,12 +3,22 @@
 
 <head>
 
+    <style>
+        .bg {
+            background: linear-gradient(135deg, #2ecc71, #27ae60, #1abc9c);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <link rel="icon" href="{{ asset('logo/logo1.png') }}" type="image/png" sizes="16x16">
     <title>Absensi | Register</title>
 
     <!-- Custom fonts for this template-->
@@ -22,8 +32,7 @@
 
 </head>
 
-<body class="bg-gradient-primary">
-
+<body class="bg">
     <div class="container">
 
         <!-- Outer Row -->
@@ -67,7 +76,7 @@
                                             @enderror
                                         </div>
 
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                        <button type="submit" class="btn btn-user btn-block text-white" style="background-color: #27ae60;">
                                             Register
                                         </button>
                                     </form>

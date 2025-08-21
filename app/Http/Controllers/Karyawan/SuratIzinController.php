@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Karyawan;
 
 use App\Http\Controllers\Controller;
 use App\Models\SuratIzin;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -77,5 +79,26 @@ class SuratIzinController extends Controller
         $surat->delete();
 
         return redirect()->route('karyawan.suratizin.index')->with('success', 'Surat berhasil dihapus');
+    }
+
+    public function cetak($id)
+    {
+        Carbon::setLocale('id');
+        $surat = SuratIzin::where('id', $id)
+            ->where('user_id', Auth::user())
+            ->with('user')
+            ->firstOrFail();
+
+        $html = view('karyawan.suratizin.cetak', compact('surat'))->render();
+
+        $pdf = Pdf::loadHTML($html)
+            ->setPaper('A4', 'portrait')
+            ->setOptions([
+                'defaultFont' => 'sans-serif',
+                'isHtml5ParserEnabled' => true,
+                'isRemoteEnabled' => false,
+            ]);
+
+        return $pdf->download('surat-izin-' . $surat->user->name . '.pdf');
     }
 }

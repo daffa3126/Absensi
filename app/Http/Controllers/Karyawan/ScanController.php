@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Karyawan;
 
 use App\Http\Controllers\Controller;
+use App\Models\Absensi;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,18 +18,17 @@ class ScanController extends Controller
 
     public function proses(Request $request)
     {
+        // Mengambil data user
         $user = Auth::user();
         $qrData = $request->input('data');
 
-        // Format: ABSEN|timestamp|hash
+        // Memecah part jadi 3, Format: ABSEN|timestamp|hash
         $parts = explode('|', $qrData);
-
         if (count($parts) !== 3 || $parts[0] !== 'ABSEN') {
             return response()->json(['status' => 'error', 'message' => 'Format QR tidak valid.']);
         }
 
         [$prefix, $timestamp, $hash] = $parts;
-
         $secretKey = 'rahasia-absensi';
         $expectedHash = hash('sha256', $timestamp . $secretKey);
 
@@ -36,60 +37,56 @@ class ScanController extends Controller
             return response()->json(['status' => 'error', 'message' => 'QR tidak valid (hash salah).']);
         }
 
-        // Validasi waktu (maks selisih 3 detik)
+        // Validasi waktu (maks 3 detik)
         $now = now();
-        $qrTime = \Carbon\Carbon::createFromFormat('YmdHis', $timestamp);
-        $diff = $now->diffInSeconds($qrTime);
-
-        if ($diff > 3) {
+        $qrTime = Carbon::createFromFormat('YmdHis', $timestamp);
+        if ($now->diffInSeconds($qrTime) > 3) {
             return response()->json(['status' => 'error', 'message' => 'QR sudah kedaluwarsa.']);
         }
 
-        // Cari absensi hari ini
-        $absensiHariIni = DB::table('absensis')
-            ->where('user_id', $user->id)
+        // Cek absensi hari ini
+        $absensiHariIni = Absensi::where('user_id', $user->id)
             ->whereDate('tanggal', $now->toDateString())
             ->first();
 
-        // Jam batas
         $jamTepatWaktu = '08:00:00';
         $jamPulang = '16:30:00';
 
+        // === ABSEN MASUK ===
         if (!$absensiHariIni) {
-            // === ABSEN MASUK ===
             $statusMasuk = ($now->format('H:i:s') <= $jamTepatWaktu) ? 'Tepat Waktu' : 'Terlambat';
 
-            DB::table('absensis')->insert([
+            // Menyimpan data ke table absensi
+            Absensi::create([
                 'user_id' => $user->id,
                 'tanggal' => $now->toDateString(),
                 'jam_masuk' => $now->format('H:i:s'),
                 'status_masuk' => $statusMasuk,
                 'waktu' => $now,
-                'created_at' => now(),
-                'updated_at' => now(),
             ]);
 
+            // Memberikan message success
             return response()->json([
                 'status' => 'success',
                 'message' => 'Absensi masuk berhasil dicatat'
             ]);
         }
 
-        if ($absensiHariIni && !$absensiHariIni->jam_keluar) {
-            // === ABSEN KELUAR ===
+        // === ABSEN KELUAR ===
+        if (!$absensiHariIni->jam_keluar) {
+            // mengecek apakah sudah waktunya jam pulang, kalo belum muncul error
             if ($now->format('H:i:s') < $jamPulang) {
                 return response()->json(['status' => 'error', 'message' => 'Belum waktunya pulang.']);
             }
 
+            // Mengecek apakah sudah waktunya pulang
             $statusKeluar = ($now->format('H:i:s') >= $jamPulang) ? 'Pulang Tepat Waktu' : 'Pulang Cepat';
 
-            DB::table('absensis')
-                ->where('id', $absensiHariIni->id)
-                ->update([
-                    'jam_keluar' => $now->format('H:i:s'),
-                    'status_keluar' => $statusKeluar,
-                    'updated_at' => now(),
-                ]);
+
+            $absensiHariIni->update([
+                'jam_keluar' => $now->format('H:i:s'),
+                'status_keluar' => $statusKeluar,
+            ]);
 
             return response()->json([
                 'status' => 'success',
@@ -100,14 +97,15 @@ class ScanController extends Controller
         return response()->json(['status' => 'error', 'message' => 'Anda sudah absen masuk & keluar hari ini.']);
     }
 
-
     public function histori()
     {
         $user = Auth::user();
 
-        // Ambil absensi user yang sedang login, urut terbaru
-        $absensi = DB::table('absensis')
-            ->where('user_id', $user->id)
+        // Set bulan ke lokal
+        Carbon::setLocale('id');
+
+        // Ambil absensi user yang sedang login, urut dari yang terbaru
+        $absensi = Absensi::where('user_id', $user->id)
             ->orderBy('waktu', 'desc')
             ->get();
 

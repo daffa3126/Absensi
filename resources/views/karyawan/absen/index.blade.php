@@ -22,17 +22,23 @@
 <script src="https://unpkg.com/html5-qrcode"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    // Library html5qrcode untuk handle proses scan
     let html5QrCode;
+    // Daftar list kamera yang tersedia (Depan atau belakang)
     let cameraList = [];
+    // Kamera yang saat ini digunakan
     let currentCameraIndex = 0;
+
 
     const btnSwitch = document.getElementById('btn-switch-camera');
     const hasilDiv = document.getElementById('hasil');
 
+    // Pesan loading saat berhasil scan 
     function showLoading(message = "Memverifikasi...") {
         hasilDiv.innerHTML = `<div class="alert alert-info">${message}</div>`;
     }
 
+    // Hapus pesan jika proses sudah selesai
     function clearLoading() {
         hasilDiv.innerHTML = "";
     }
@@ -55,6 +61,7 @@
                 .then(res => {
                     clearLoading(); // hapus pesan memverifikasi
 
+                    // SweetAlert
                     if (res.status === 'success') {
                         Swal.fire({
                             icon: 'success',

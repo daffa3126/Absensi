@@ -56,7 +56,7 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn text-white btn-primary">Simpan</button>
+        <button type="submit" class="btn text-white" style="background-color: #2ecc71;">Simpan</button>
         <a href="{{ route('admin.users.index') }}" class="btn btn-secondary text-white">Kembali</a>
     </form>
 </div>

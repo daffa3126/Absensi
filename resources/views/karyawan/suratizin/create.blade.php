@@ -36,7 +36,7 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-primary">Simpan</button>
+        <button type="submit" class="btn text-white " style="background-color: #2ecc71;">Simpan</button>
         <a href="{{ route('karyawan.suratizin.index') }}" class="btn btn-secondary">Kembali</a>
     </form>
 </div>

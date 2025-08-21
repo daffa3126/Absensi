@@ -8,7 +8,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <a href="{{ route('karyawan.suratizin.create') }}" class="btn text-dark" style="background-color: #E0E0E0;">
+        <a href="{{ route('karyawan.suratizin.create') }}" class="btn text-white" style="background-color: #2ecc71;">
             <i class="fas fa-plus"></i>
             Buat Surat Izin
         </a>
@@ -16,7 +16,7 @@
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead class="text-dark" style="background-color: #E0E0E0;">
+                <thead class="text-white" style="background-color: #2ecc71;">
                     <tr>
                         <th>No</th>
                         <th>Tanggal</th>
@@ -44,13 +44,15 @@
                         </td>
                         <td>
                             <div class="d-flex justify-content-center align-items-center" style="gap: 8px;">
-                                {{-- Opsional: edit dan hapus --}}
                                 <a href="{{ route('karyawan.suratizin.edit', $surat->id) }}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
                                 <form action="{{ route('karyawan.suratizin.destroy', $surat->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger btn-delete"><i class="fas fa-trash"></i></button>
                                 </form>
+                                <a href="{{ route('karyawan.suratizin.cetak', $surat->id) }}" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-print"></i>
+                                </a>
                             </div>
                         </td>
                     </tr>

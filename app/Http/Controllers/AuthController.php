@@ -68,6 +68,6 @@ class AuthController extends Controller
             'role' => 'karyawan' // otomatis jadi customer
         ]);
 
-        return redirect()->route('auth.login')->with('success', 'Akun berhasil dibuat! Silahkan login');
+        return redirect()->route('login')->with('success', 'Akun berhasil dibuat! Silahkan login');
     }
 }

@@ -16,7 +16,7 @@
                         <option value="">-- Semua Bulan --</option>
                         @for ($m = 1; $m <= 12; $m++)
                             <option value="{{ $m }}" {{ request('bulan') == $m ? 'selected' : '' }}>
-                            {{ \Carbon\Carbon::create()->month($m)->translatedFormat('F') }}
+                            {{ \Carbon\Carbon::create()->month($m)->locale('id')->translatedFormat('F') }}
                             </option>
                             @endfor
                     </select>
@@ -30,13 +30,13 @@
                         @endfor
                     </select>
                 </div>
-                <div class="col-md-3 d-flex align-items-end">
-                    <button type="submit" class="btn btn-dark">Filter</button>
-                    <a href="{{ route('admin.absensi.index') }}" class="btn btn-secondary ml-2">Reset</a>
+                <div class="col-md-3 d-flex align-items-end mt-2">
+                    <button type="submit" class="btn text-white" style="background-color: #27ae60;">Filter</button>
+                    <a href="{{ route('admin.absensi.index') }}" class="btn text-white ml-2" style="background-color: #2ecc71;">Reset</a>
                 </div>
             </form>
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead class="thead-dark">
+                <thead class="text-white" style="background-color: #2ecc71;">
                     <tr>
                         <th>No</th>
                         <th>Nama Karyawan</th>
@@ -48,17 +48,43 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($absensi as $item)
+                    @forelse($absensi as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->nama_user }}</td>
-                        <td>{{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d F Y') }}</td>
+                        <td>{{ $item->user->name }}</td>
+                        <td>{{ \Carbon\Carbon::parse($item->tanggal)->locale('id')->translatedFormat('d F Y') }}</td>
                         <td>{{ $item->jam_masuk ?? '-' }}</td>
-                        <td>{{ $item->status_masuk ?? '-' }}</td>
+                        <td>
+                            @if($item->status_masuk === 'Tepat Waktu')
+                            <span class="badge badge-success">{{ $item->status_masuk }}</span>
+                            @else
+                            <span class="badge badge-warning">{{ $item->status_masuk }}</span>
+                            @endif
+                        </td>
                         <td>{{ $item->jam_keluar ?? '-' }}</td>
-                        <td>{{ $item->status_keluar ?? '-' }}</td>
+                        <td>
+                            @php
+                            $tanggalAbsensi = \Carbon\Carbon::parse($item->tanggal)->locale('id');
+                            @endphp
+
+                            @if(!$item->status_keluar)
+                            @if($tanggalAbsensi->isBefore(\Carbon\Carbon::today()))
+                            <span class="badge badge-danger">Tidak Absen</span>
+                            @else
+                            <span>-</span>
+                            @endif
+                            @elseif($item->status_keluar === 'Pulang Tepat Waktu')
+                            <span class="badge badge-success">{{ $item->status_keluar }}</span>
+                            @else
+                            <span class="badge badge-primary">{{ $item->status_keluar }}</span>
+                            @endif
+                        </td>
                     </tr>
-                    @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="7" class="text-center">Belum ada data absensi</td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

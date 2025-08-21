@@ -9,6 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <link rel="icon" href="{{ asset('logo/logo1.png') }}" type="image/png" sizes="16x16">
     <title>@yield('title', 'Dashboard')</title>
 
     <!-- Custom fonts for this template-->
@@ -155,6 +156,28 @@
             });
         });
     </script>
+
+    <!-- Script untuk idle di web auto logout -->
+    <script>
+        let idleTime = 0;
+        const idleLimit = 10 * 60 * 1000; // 10 menit dalam ms
+
+        function resetTimer() {
+            clearTimeout(window.idleTimer);
+            window.idleTimer = setTimeout(() => {
+                // redirect ke logout
+                window.location.href = "{{ route('logout') }}?expired=1";
+            }, idleLimit);
+        }
+
+        // reset timer kalau ada aktivitas
+        window.onload = resetTimer;
+        document.onmousemove = resetTimer;
+        document.onkeypress = resetTimer;
+        document.onclick = resetTimer;
+        document.onscroll = resetTimer;
+    </script>
+
     @stack('scripts')
 </body>
 

@@ -10,7 +10,7 @@
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead class="text-dark" style="background-color: #E0E0E0;">
+                <thead class="text-white" style="background-color: #2ecc71;">
                     <tr>
                         <th>No</th>
                         <th>Nama Karyawan</th>
@@ -39,8 +39,10 @@
                             @endif
                         </td>
                         <td>
-                            {{-- Tombol aksi (misal: acc atau tolak) nanti diatur di langkah berikutnya --}}
                             <div class="d-flex justify-content-center align-items-center" style="gap: 8px;">
+                                <a href="{{ route('admin.suratizin.lihat', $surat->id) }}" target="_blank" class="btn btn-sm btn-info">
+                                    <i class="fas fa-eye"></i>
+                                </a>
                                 <form action="{{ route('admin.suratizin.setujui', $surat->id) }}" method="POST">
                                     @csrf
                                     @method('PUT')

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Absensi;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,19 +15,12 @@ class AbsensiController extends Controller
         $bulan = $request->bulan;
         $tahun = $request->tahun;
 
-        $absensi = DB::table('absensis')
-            ->join('users', 'absensis.user_id', '=', 'users.id')
-            ->select(
-                'users.name as nama_user',
-                'absensis.tanggal',
-                'absensis.jam_masuk',
-                'absensis.status_masuk',
-                'absensis.jam_keluar',
-                'absensis.status_keluar'
-            )
+        $absensi = Absensi::with('user')
+            // Filter berdasarkan bulan
             ->when($bulan, function ($query) use ($bulan) {
                 $query->whereMonth('tanggal', $bulan);
             })
+            // FIlter berdasarkan tahun
             ->when($tahun, function ($query) use ($tahun) {
                 $query->whereYear('tanggal', $tahun);
             })

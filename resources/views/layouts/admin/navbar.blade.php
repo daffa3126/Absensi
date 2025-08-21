@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand topbar mb-4 static-top shadow" style="background-color: #1A1A1A;">
+<nav class="navbar navbar-expand topbar mb-4 static-top shadow" style="background-color: #2ecc71;">
 
     <!-- Sidebar Toggle (Topbar) -->
     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3 bars-menu">
@@ -14,7 +14,7 @@
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-3 d-none d-inline text-white small">{{ Auth::user()->name }}</span>
                 <img class="img-profile rounded-circle"
-                    src="{{ asset('sbadmin2/img/undraw_profile.svg') }}">
+                    src="{{ asset('img/' . Auth::user()->foto)}}">
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in user-dropdown-menu" aria-labelledby="userDropdown">
@@ -22,10 +22,10 @@
                     @if(Auth::user()->role === 'admin')
                     <span class="badge badge-success mb-2" style="padding: 0.5em 1em;">{{ Auth::user()->role }}</span>
                     @else
-                    <span class=" badge badge-secondary mb-2" style="padding: 0.5em 1em;">{{ Auth::user()->role }}</span>
+                    <span class=" badge badge-primary mb-2" style="padding: 0.5em 1em;">{{ Auth::user()->role }}</span>
                     @endif
                 </div>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="{{ route('admin.users.profile') }}">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Profile
                 </a>

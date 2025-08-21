@@ -8,14 +8,11 @@ class Absensi extends Model
 {
     protected $fillable = [
         'user_id',
-        'kode_qr',
-        'status',
-        'waktu',
-        'valid',
         'tanggal',
         'jam_masuk',
-        'jam_keluar',
         'status_masuk',
+        'waktu',
+        'jam_keluar',
         'status_keluar'
     ];
 
@@ -24,4 +21,9 @@ class Absensi extends Model
         'tanggal' => 'date',
         // jam_masuk/jam_keluar kita biarkan string/time di DB; bisa diformat saat tampil
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

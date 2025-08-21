@@ -15,7 +15,7 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <a href="{{ route('admin.users.create') }}" class="btn text-dark" style="background-color: #E0E0E0;">
+        <a href="{{ route('admin.users.create') }}" class="btn text-white" style="background-color: #2ecc71;">
             <i class="fas fa-plus"></i>
             Tambah User
         </a>
@@ -23,7 +23,7 @@
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead class="text-dark" style="background-color: #E0E0E0;">
+                <thead class="text-white" style="background-color: #2ecc71;">
                     <tr>
                         <th>No</th>
                         <th>Nama</th>
@@ -45,7 +45,7 @@
                             @if($user->role === 'admin')
                             <span class="badge badge-success">admin</span>
                             @else
-                            <span class="badge badge-secondary">karyawan</span>
+                            <span class="badge badge-primary">karyawan</span>
                             @endif
                         </td>
                         <td>

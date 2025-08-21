@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('absensis', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->timestamp('waktu');
+            $table->timestamp('waktu')->nullable();
             $table->timestamps();
         });
     }
