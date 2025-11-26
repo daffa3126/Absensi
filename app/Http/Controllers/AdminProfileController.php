@@ -23,7 +23,7 @@ class AdminProfileController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:6',
+            'password' => 'nullable|string|min:6|confirmed',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
@@ -45,7 +45,8 @@ class AdminProfileController extends Controller
             // Simpan foto baru
             $file = $request->file('foto');
             $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('img'), $filename);
+            // $file->move(public_path('img'), $filename);
+            $file->move($_SERVER['DOCUMENT_ROOT'] . '/img', $filename);
             $user->foto = $filename;
         }
 

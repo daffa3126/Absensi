@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Karyawan\ScanController;
 use App\Http\Controllers\Karyawan\SuratIzinController as KaryawanSuratIzin;
 use App\Http\Controllers\AdminProfileController;
+use App\Http\Controllers\KaryawanProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -26,13 +27,22 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.proses');
 Route::get('/register', [AuthController::class, 'register'])->name('auth.register');
 Route::post('/register', [AuthController::class, 'prosesRegister'])->name('register.proses');
 
-// Logout
-// Logout
-Route::post('/logout', function () {
-    Auth::logout();
-    return redirect('/login')->with('success', 'Anda telah berhasil logout.');
-})->name('logout');
+Route::middleware(['guest'])->group(function () {
+    Route::get('/forgot-password', [AuthController::class, 'forgotPassword'])->name('password.request');
 
+    Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
+
+    Route::get('/reset-password/{token}', [AuthController::class, 'ResetForm'])->name('password.reset');
+
+    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
+});
+
+// Logout   
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::middleware(['auth'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+// Membatasi akses halaman sebelum login
 Route::middleware(['auth'])->group(function () {
     // Dashboard Admin
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
@@ -68,13 +78,14 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/admin/surat-izin/{id}/tolak', [AdminSuratIzin::class, 'tolak'])->name('admin.suratizin.tolak');
 });
 
+// Membatasi akses halaman sebelum login
 Route::middleware(['auth'])->group(function () {
     // Dashboard Karyawan
     Route::get('/karyawan/dashboard', [DashboardController::class, 'index'])->name('karyawan.dashboard');
 
     // Karyawan Profile
-    Route::get('/karyawan/profile', [AdminProfileController::class, 'profile'])->name('karyawan.profile');
-    Route::put('/karyawan/profile/{id}', [AdminProfileController::class, 'profileUpdate'])->name('karyawan.profile.update');
+    Route::get('/karyawan/profile', [KaryawanProfileController::class, 'profile'])->name('karyawan.profile');
+    Route::put('/karyawan/profile/{id}', [KaryawanProfileController::class, 'profileUpdate'])->name('karyawan.profile.update');
 
     // Absen Index
     Route::get('/karyawan/absen', [ScanController::class, 'index'])->name('karyawan.absen.index');

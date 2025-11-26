@@ -40,6 +40,7 @@ class ScanController extends Controller
         // Validasi waktu (maks 3 detik)
         $now = now();
         $qrTime = Carbon::createFromFormat('YmdHis', $timestamp);
+        // Menghitung selisih waktu dengan qr code jika lebih dari 3 detik maka qr code sudah kedaluwarsa
         if ($now->diffInSeconds($qrTime) > 3) {
             return response()->json(['status' => 'error', 'message' => 'QR sudah kedaluwarsa.']);
         }
@@ -79,13 +80,11 @@ class ScanController extends Controller
                 return response()->json(['status' => 'error', 'message' => 'Belum waktunya pulang.']);
             }
 
-            // Mengecek apakah sudah waktunya pulang
-            $statusKeluar = ($now->format('H:i:s') >= $jamPulang) ? 'Pulang Tepat Waktu' : 'Pulang Cepat';
-
-
+            // Set status keluar
+            // Ambil waktu saat ini, dan mengubah ke format H:i:s jam menit detik
             $absensiHariIni->update([
                 'jam_keluar' => $now->format('H:i:s'),
-                'status_keluar' => $statusKeluar,
+                'status_keluar' => 'Pulang',
             ]);
 
             return response()->json([
@@ -97,15 +96,22 @@ class ScanController extends Controller
         return response()->json(['status' => 'error', 'message' => 'Anda sudah absen masuk & keluar hari ini.']);
     }
 
-    public function histori()
+    public function histori(Request $request)
     {
         $user = Auth::user();
 
-        // Set bulan ke lokal
         Carbon::setLocale('id');
 
-        // Ambil absensi user yang sedang login, urut dari yang terbaru
+        $bulan = $request->bulan;
+        $tahun = $request->tahun;
+
         $absensi = Absensi::where('user_id', $user->id)
+            ->when($bulan, function ($query) use ($bulan) {
+                $query->whereMonth('tanggal', $bulan);
+            })
+            ->when($tahun, function ($query) use ($tahun) {
+                $query->whereYear('tanggal', $tahun);
+            })
             ->orderBy('waktu', 'desc')
             ->get();
 

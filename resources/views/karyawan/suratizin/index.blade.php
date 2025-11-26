@@ -30,7 +30,7 @@
                     @forelse($surats as $surat)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ \Carbon\Carbon::parse($surat->tanggal)->translatedFormat('d F Y') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($surat->tanggal)->locale('id')->translatedFormat('d F Y') }}</td>
                         <td>{{ ucfirst($surat->jenis) }}</td>
                         <td>{{ $surat->alasan }}</td>
                         <td>

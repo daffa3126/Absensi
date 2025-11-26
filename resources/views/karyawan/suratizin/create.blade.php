@@ -10,7 +10,7 @@
 
         <div class="form-group">
             <label for="tanggal">Tanggal Izin</label>
-            <input type="date" name="tanggal" class="form-control @error('tanggal') is-invalid @enderror" value="{{ old('tanggal') }}">
+            <input type="date" name="tanggal" class="form-control @error('tanggal') is-invalid @enderror" value="{{ old('tanggal') }}" min="{{ date('Y-m-d') }}">
             @error('tanggal')
             <div class="invalid-feedback">{{ $message }}</div>
             @enderror

@@ -45,7 +45,8 @@ class KaryawanProfileController extends Controller
             // Simpan foto baru
             $file = $request->file('foto');
             $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('img'), $filename);
+            // $file->move(public_path('img'), $filename);
+            $file->move($_SERVER['DOCUMENT_ROOT'] . '/img', $filename);
             $user->foto = $filename;
         }
 

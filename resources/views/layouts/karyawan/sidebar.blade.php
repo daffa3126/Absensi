@@ -1,7 +1,7 @@
 <ul class="navbar-nav sidebar text-white accordion" id="accordionSidebar" style="background-color: #27ae60;">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('karyawan.dashboard') }}">
         <div class="sidebar-brand-icon">
             <i class="fas fa-clipboard-check text-white"></i>
         </div>
@@ -14,7 +14,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item {{ Request::is('admin/dashboard') ? 'active' : ''}}">
-        <a class="nav-link" href="{{ route('admin.dashboard') }}">
+        <a class="nav-link" href="{{ route('karyawan.dashboard') }}">
             <i class="fas fa-fw fa-tachometer-alt text-white"></i>
             <span class="text-white">Dashboard</span></a>
     </li>
@@ -25,7 +25,7 @@
 
     <!-- Heading -->
     <div class="sidebar-heading">
-        Menu Admin
+        Menu Karyawan
     </div>
     <li class="nav-item {{ Request::is('karyawan/absen') ? 'active' : ''}}">
         <a class="nav-link" href="{{ route('karyawan.absen.index') }}">

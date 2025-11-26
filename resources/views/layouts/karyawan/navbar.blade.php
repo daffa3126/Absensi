@@ -12,7 +12,7 @@
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-3 d-none d-lg-inline text-white small">{{ Auth::user()->name }}</span>
+                <span class="mr-3 d-none d-inline text-white small">{{ Auth::user()->name }}</span>
                 <img class="img-profile rounded-circle"
                     src="{{ asset('img/' . Auth::user()->foto)}}">
             </a>
@@ -22,7 +22,7 @@
                     @if(Auth::user()->role === 'admin')
                     <span class="badge badge-success mb-2" style="padding: 0.5em 1em;">{{ Auth::user()->role }}</span>
                     @else
-                    <span class=" badge badge-primary mb-2" style="padding: 0.5em 1em;">{{ Auth::user()->role }}</span>
+                    <span class=" badge badge-primary mb-2 " style="padding: 0.5em 1em;">{{ Auth::user()->role }}</span>
                     @endif
                 </div>
                 <a class="dropdown-item" href="{{ route('karyawan.profile') }}">
@@ -30,9 +30,9 @@
                     Profile
                 </a>
                 <div class="dropdown-divider"></div>
-                <form action="{{ route('logout') }}" method="POST" class="dropdown-item p-0 m-0">
+                <form action="{{ route('logout') }}" method="POST" class="m-0">
                     @csrf
-                    <button type="submit" class="btn btn-link dropdown-item btn-logout">
+                    <button type="submit" class="dropdown-item btn-logout">
                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                         Logout
                     </button>

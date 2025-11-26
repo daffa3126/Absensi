@@ -26,7 +26,7 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $surat->user->name }}</td>
-                        <td>{{ \Carbon\Carbon::parse($surat->tanggal)->translatedFormat('d F Y') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($surat->tanggal)->locale('id')->translatedFormat('d F Y') }}</td>
                         <td>{{ ucfirst($surat->jenis) }}</td>
                         <td>{{ $surat->alasan }}</td>
                         <td>
@@ -43,6 +43,21 @@
                                 <a href="{{ route('admin.suratizin.lihat', $surat->id) }}" target="_blank" class="btn btn-sm btn-info">
                                     <i class="fas fa-eye"></i>
                                 </a>
+                                <!-- <form action="{{ route('admin.suratizin.setujui', $surat->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <button class="btn btn-sm btn-success">
+                                        <i class="fas fa-solid fa-check"></i>
+                                    </button>
+                                </form>
+                                <form action="{{ route('admin.suratizin.tolak', $surat->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <button class="btn btn-sm btn-danger">
+                                        <i class="fas fa-solid fa-times"></i>
+                                    </button>
+                                </form> -->
+                                @if($surat->status === 'belum disetujui')
                                 <form action="{{ route('admin.suratizin.setujui', $surat->id) }}" method="POST">
                                     @csrf
                                     @method('PUT')
@@ -57,6 +72,7 @@
                                         <i class="fas fa-solid fa-times"></i>
                                     </button>
                                 </form>
+                                @endif
                             </div>
                         </td>
                     </tr>

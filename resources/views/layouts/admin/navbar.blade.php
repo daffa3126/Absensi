@@ -30,9 +30,9 @@
                     Profile
                 </a>
                 <div class="dropdown-divider"></div>
-                <form action="{{ route('logout') }}" method="POST" class="dropdown-item p-0 m-0">
+                <form action="{{ route('logout') }}" method="POST" class="m-0">
                     @csrf
-                    <button type="submit" class="btn btn-link dropdown-item btn-logout">
+                    <button type="submit" class="dropdown-item btn-logout">
                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                         Logout
                     </button>

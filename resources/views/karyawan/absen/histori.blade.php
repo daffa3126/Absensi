@@ -9,7 +9,7 @@
 <div class="card-body">
     <div class="table-responsive">
 
-        <form action="{{ route('admin.absensi.index') }}" method="GET" class="row mb-4">
+        <form action="{{ route('karyawan.absen.histori') }}" method="GET" class="row mb-4">
             <div class="col-md-3">
                 <label for="bulan">Bulan</label>
                 <select name="bulan" id="bulan" class="form-control">
@@ -18,7 +18,7 @@
                         <option value="{{ $m }}" {{ request('bulan') == $m ? 'selected' : '' }}>
                         {{ \Carbon\Carbon::create()->month($m)->locale('id')->translatedFormat('F') }}
                         </option>
-                        @endfor
+                    @endfor
                 </select>
             </div>
             <div class="col-md-3">
@@ -32,7 +32,7 @@
             </div>
             <div class="col-md-3 d-flex align-items-end mt-2">
                 <button type="submit" class="btn text-white" style="background-color: #27ae60;">Filter</button>
-                <a href="{{ route('admin.absensi.index') }}" class="btn text-white ml-2" style="background-color: #2ecc71;">Reset</a>
+                <a href="{{ route('karyawan.absen.histori') }}" class="btn text-white ml-2" style="background-color: #2ecc71;">Reset</a>
             </div>
         </form>
         <table class="table table-bordered mt-3" id="dataTable">
@@ -75,12 +75,10 @@
                         @else
                         <span>-</span>
                         @endif
-                        @elseif($item->status_keluar === 'Pulang Tepat Waktu')
+                        @elseif($item->status_keluar === 'Pulang')
                         <span class="badge badge-success">{{ $item->status_keluar }}</span>
-                        @elseif($item->status_keluar === 'Pulang Cepat')
-                        <span class="badge badge-primary">{{ $item->status_keluar }}</span>
                         @else
-                        -
+                        <span>-</span>
                         @endif
                     </td>
                 </tr>

@@ -26,6 +26,13 @@
 
     <link rel="stylesheet" href="{{ asset('sbadmin2/css/custom.css') }}">
 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+
 </head>
 
 <body id="page-top">
@@ -157,25 +164,22 @@
         });
     </script>
 
-    <!-- Script untuk idle di web auto logout -->
+
+    <!-- Script untuk menghilangkan pesan error setelah beberapa detik -->
     <script>
-        let idleTime = 0;
-        const idleLimit = 10 * 60 * 1000; // 10 menit dalam ms
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(() => {
+                // Hapus semua pesan error (text merah)
+                document.querySelectorAll('.invalid-feedback').forEach(el => {
+                    el.remove();
+                });
 
-        function resetTimer() {
-            clearTimeout(window.idleTimer);
-            window.idleTimer = setTimeout(() => {
-                // redirect ke logout
-                window.location.href = "{{ route('logout') }}?expired=1";
-            }, idleLimit);
-        }
-
-        // reset timer kalau ada aktivitas
-        window.onload = resetTimer;
-        document.onmousemove = resetTimer;
-        document.onkeypress = resetTimer;
-        document.onclick = resetTimer;
-        document.onscroll = resetTimer;
+                // Hapus semua border merah di input
+                document.querySelectorAll('.is-invalid').forEach(input => {
+                    input.classList.remove('is-invalid');
+                });
+            }, 3000); // 3 detik
+        });
     </script>
 
     @stack('scripts')

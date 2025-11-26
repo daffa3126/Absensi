@@ -15,7 +15,7 @@ class SuratIzinController extends Controller
     {
         // Ambil data surat milik karyawan yang sedang login
         $surats = SuratIzin::where('user_id', Auth::id())
-            ->orderBy('tanggal', 'desc')
+            ->orderBy('created_at', 'desc')
             ->get();
 
         return view('karyawan.suratizin.index', compact('surats'));
@@ -29,11 +29,13 @@ class SuratIzinController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'tanggal' => 'required|date',
+            // After or equal validasi untuk memastikan tanggal tidak di masa lalu
+            'tanggal' => 'required|date|after_or_equal:today',
             'jenis' => 'required|in:sakit,izin',
             'alasan' => 'required|string'
         ], [
             'tanggal.required' => 'Tanggal harus diisi',
+            'tanggal.after_or_equal' => 'Tanggal tidak boleh sebelum hari ini',
             'jenis.required' => 'Jenis surat harus diisi',
             'alasan.required' => 'Alasan harus diisi'
         ]);
@@ -84,21 +86,37 @@ class SuratIzinController extends Controller
     public function cetak($id)
     {
         Carbon::setLocale('id');
-        $surat = SuratIzin::where('id', $id)
-            ->where('user_id', Auth::user())
-            ->with('user')
-            ->firstOrFail();
 
-        $html = view('karyawan.suratizin.cetak', compact('surat'))->render();
+        $surat = SuratIzin::with('user')->findOrFail($id);
 
-        $pdf = Pdf::loadHTML($html)
-            ->setPaper('A4', 'portrait')
-            ->setOptions([
-                'defaultFont' => 'sans-serif',
+        try {
+            // Render view menjadi HTML
+            $html = view('karyawan.suratizin.cetak', compact('surat'))->render();
+
+            // Gunakan DomPDF core langsung, bukan Laravel package
+            $dompdf = new \Dompdf\Dompdf([
                 'isHtml5ParserEnabled' => true,
+                'isPhpEnabled' => false,
                 'isRemoteEnabled' => false,
+                'tempDir' => storage_path('app/temp'),
+                'fontDir' => storage_path('fonts'),
+                'chroot' => public_path(),
             ]);
 
-        return $pdf->download('surat-izin-' . $surat->user->name . '.pdf');
+            $dompdf->loadHtml($html);
+            $dompdf->setPaper('A4', 'portrait');
+            $dompdf->render();
+
+            // Stream PDF
+            return response($dompdf->output())
+                ->header('Content-Type', 'application/pdf')
+                ->header('Content-Disposition', 'inline; filename="surat-izin-' . $surat->user->name . '.pdf"');
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+                'line' => $e->getLine(),
+                'file' => $e->getFile()
+            ]);
+        }
     }
 }

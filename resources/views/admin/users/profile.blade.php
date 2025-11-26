@@ -34,6 +34,14 @@
         </div>
 
         <div class="form-group">
+            <label>Konfirmasi Password</label>
+            <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror">
+            @error('password_confirmation')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="form-group">
             <label>Foto Profil</label><br>
             <img id="preview-image"
                 src="{{ $user->foto ? asset('img/' . $user->foto) : asset('img/default.png') }}"

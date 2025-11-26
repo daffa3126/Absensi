@@ -23,7 +23,6 @@ class DashboardController extends Controller
                 ->whereMonth('tanggal', date('m'))
                 ->count();
 
-
             $namaBulan = Carbon::now()->locale('id')->isoFormat('MMMM');
 
             return view('karyawan.dashboard', compact('totalAbsensiBulanIni', 'namaBulan'));

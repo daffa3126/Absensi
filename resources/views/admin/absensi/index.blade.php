@@ -4,7 +4,7 @@
 
 @section('content')
 
-<h1 class="h3 mb-4 text-gray-800">Laporan Absensi</h1>
+<h1 class="h3 mb-4 text-gray-800">Laporan Absensi Karyawan</h1>
 
 <div class="card shadow mb-4">
     <div class="card-body">
@@ -18,7 +18,7 @@
                             <option value="{{ $m }}" {{ request('bulan') == $m ? 'selected' : '' }}>
                             {{ \Carbon\Carbon::create()->month($m)->locale('id')->translatedFormat('F') }}
                             </option>
-                            @endfor
+                        @endfor
                     </select>
                 </div>
                 <div class="col-md-3">
@@ -73,10 +73,10 @@
                             @else
                             <span>-</span>
                             @endif
-                            @elseif($item->status_keluar === 'Pulang Tepat Waktu')
+                            @elseif($item->status_keluar === 'Pulang')
                             <span class="badge badge-success">{{ $item->status_keluar }}</span>
                             @else
-                            <span class="badge badge-primary">{{ $item->status_keluar }}</span>
+                            <span>-</span>
                             @endif
                         </td>
                     </tr>

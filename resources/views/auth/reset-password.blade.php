@@ -19,17 +19,16 @@
     <meta name="author" content="">
 
     <link rel="icon" href="{{ asset('logo/logo1.png') }}" type="image/png" sizes="16x16">
-    <title>Absensi | Login</title>
+    <title>Absensi | Reset Password</title>
 
     <!-- Custom fonts for this template-->
-    <link href="{{ asset('sbadmin2/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('sbadmin2/css/sb-admin-2.min.css') }}" rel="stylesheet">
-    <link rel="icon" href="{{ asset('img/logo.png') }}" type="image/png" sizes="16x16">
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -41,7 +40,6 @@
 </head>
 
 <body class="bg">
-
     <div class="container">
 
         <!-- Outer Row -->
@@ -56,13 +54,13 @@
                             <div class="col-lg-12 d-">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Login</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Reset Password</h1>
                                     </div>
-                                    <form class="user" method="POST" action="{{route('login.proses')}}">
+                                    <form class="user" method="POST" action="{{ route('password.update') }}">
                                         @csrf
                                         <div class="form-group">
                                             <input type="email" name="email" class="form-control form-control-user @error('email') is-invalid @enderror"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                                id="exampleInputEmail"
                                                 placeholder="Masukkan email" autocomplete="off" value="{{ old('email') }}">
                                             @error('email')
                                             <div class="invalid-feedback">{{ $message }}</div>
@@ -70,25 +68,32 @@
                                         </div>
                                         <div class="form-group">
                                             <input type="password" name="password" class="form-control form-control-user @error('password') is-invalid @enderror"
-                                                id="exampleInputPassword" placeholder="Masukkan password" autocomplete="new-password">
+                                                id="exampleInputPassword"
+                                                placeholder="Masukkan password" autocomplete="off">
                                             @error('password')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
-
+                                        <div class="form-group">
+                                            <input type="password_confirmation" name="password_confirmation" class="form-control form-control-user @error('password_confirmation') is-invalid @enderror"
+                                                id="exampleInputPasswordConfirmation"
+                                                placeholder="Masukkan Konfirmasi Password" autocomplete="off">
+                                            @error('password_confirmation')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="hidden" name="token" class="form-control form-control-user"
+                                                id="token" value="{{ $token }}">
+                                        </div>
                                         <button type="submit" class="btn btn-user btn-block text-white" style="background-color: #27ae60;">
-                                            Login
+                                            Simpan
                                         </button>
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <p class="small text-gray-900">Belum punya akun?
-                                            <a href="{{ route('auth.register') }}">Register</a>
-                                        </p>
-                                    </div>
-                                    <div class="text-center">
-                                        <p class="small text-gray-900">
-                                            <a href="{{ route('password.request') }}">Lupa Password?</a>
+                                        <p class="small text-gray-900">Kembali?
+                                            <a href="{{ route('login') }}">Login</a>
                                         </p>
                                     </div>
                                 </div>
@@ -126,58 +131,7 @@
         });
     </script>
     @endif
-    
-    @if(session('error_session_expired'))
-    <!-- SweetAlert untuk session expired -->
-    <script>
-        Swal.fire({
-            title: "Sesi Habis",
-            text: "{{ session('error_session_expired') }}",
-            icon: "error",
-            confirmButtonText: "OK",
-            confirmButtonColor: "#dc3545"
-        });
-    </script>
-    @endif
 
-    @if(session('error_direct_access'))
-    <!-- SweetAlert untuk akses langsung -->
-    <script>
-        Swal.fire({
-            title: "Login Diperlukan",
-            text: "{{ session('error_direct_access') }}",
-            icon: "warning",
-            confirmButtonText: "OK",
-            confirmButtonColor: "#ffc107"
-        });
-    </script>
-    @endif
-
-    @if(session('error'))
-    <!-- SweetAlert untuk error umum -->
-    <script>
-        Swal.fire({
-            title: "Error",
-            text: "{{ session('error') }}",
-            icon: "error",
-            confirmButtonText: "OK"
-        });
-    </script>
-    @endif
-    
-    @if(session('status'))
-    <!-- Sweetalerrt berhasil -->
-    <script>
-        Swal.fire({
-            title: "Berhasil!",
-            text: "{{ session('status') }}",
-            icon: "success",
-            confirmButtonText: "OK"
-        });
-    </script>
-    @endif
-
-    <!-- Error agar hilang setelah beberapa detik -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             setTimeout(() => {
