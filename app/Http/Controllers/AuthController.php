@@ -109,12 +109,12 @@ class AuthController extends Controller
             'email.required' => 'Email harus diisi',
         ]);
 
-        $status = Password::sendResetLink(
+        $status = Password::broker('users')->sendResetLink(
             $request->only('email')
         );
 
         return $status === Password::RESET_LINK_SENT
-            ? back()->with(['status' => __('Link Reset Password Berhasil Dikirim')])
+            ? back()->with(['success' => __('Link Reset Password Berhasil Dikirim')])
             : back()->withErrors(['email' => __('Email tidak ditemukan')]);
     }
 
@@ -149,7 +149,7 @@ class AuthController extends Controller
             }
         );
 
-        return $status === Password::PasswordReset
+        return $status === Password::PASSWORD_RESET
             ? redirect()->route('login')->with('status', __('Password berhasil diperbarui'))
             : back()->withErrors(['email' => [__('Terjadi kesalahan')]]);
     }

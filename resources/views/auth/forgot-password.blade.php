@@ -56,7 +56,7 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Lupa Password</h1>
                                     </div>
-                                    <form class="user" method="POST" action="route('password.email')">
+                                    <form class="user" method="POST" action="{{ route('password.email') }}">
                                         @csrf
                                         <div class="form-group">
                                             <input type="email" name="email" class="form-control form-control-user @error('email') is-invalid @enderror"

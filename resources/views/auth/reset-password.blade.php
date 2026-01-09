@@ -75,7 +75,7 @@
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <input type="password_confirmation" name="password_confirmation" class="form-control form-control-user @error('password_confirmation') is-invalid @enderror"
+                                            <input type="password" name="password_confirmation" class="form-control form-control-user @error('password_confirmation') is-invalid @enderror"
                                                 id="exampleInputPasswordConfirmation"
                                                 placeholder="Masukkan Konfirmasi Password" autocomplete="off">
                                             @error('password_confirmation')
