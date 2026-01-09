@@ -1,4 +1,5 @@
-<ul class="navbar-nav sidebar text-dark accordion" id="accordionSidebar" style="background-color: #27ae60;">
+<!-- <ul class="navbar-nav sidebar text-dark accordion" id="accordionSidebar" style="background-color: #27ae60;"> -->
+<ul class="navbar-nav bg-gradient-success sidebar text-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <a class="nav-link sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('admin.dashboard') }}">

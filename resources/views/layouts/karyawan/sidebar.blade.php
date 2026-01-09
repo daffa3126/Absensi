@@ -1,4 +1,5 @@
-<ul class="navbar-nav sidebar text-white accordion" id="accordionSidebar" style="background-color: #27ae60;">
+<!-- <ul class="navbar-nav sidebar text-white accordion" id="accordionSidebar" style="background-color: #27ae60;"> -->
+<ul class="navbar-nav bg-gradient-success sidebar text-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('karyawan.dashboard') }}">
@@ -24,7 +25,7 @@
 
 
     <!-- Heading -->
-    <div class="sidebar-heading">
+    <div class="sidebar-heading text-white">
         Menu Karyawan
     </div>
     <li class="nav-item {{ Request::is('karyawan/absen') ? 'active' : ''}}">
@@ -40,7 +41,7 @@
     <li class="nav-item {{ Request::is('karyawan/surat-izin') ? 'active' : ''}}">
         <a class="nav-link" href="{{ route('karyawan.suratizin.index') }}">
             <i class="fas fa-fw fa-envelope text-white"></i>
-            <span class="text-white">Surat</span></a>
+            <span class="text-white">Surat Izin</span></a>
     </li>
 
     <!-- Sidebar Toggler (Sidebar) -->

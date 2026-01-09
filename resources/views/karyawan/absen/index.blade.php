@@ -7,8 +7,8 @@
     <h4>Scan QR Code untuk Absensi</h4>
 
     {{-- Tombol Switch Kamera --}}
-    <button class="btn btn-secondary mb-3" id="btn-switch-camera" style="display: none;">
-        Ganti Kamera (Depan ↔ Belakang)
+    <button class="btn btn-success mb-3" id="btn-switch-camera" style="display: none;">
+        Ganti Kamera (↔)
     </button>
 
     <div id="reader" style="width: 300px;"></div>

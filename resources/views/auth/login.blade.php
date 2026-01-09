@@ -3,14 +3,14 @@
 
 <head>
 
-    <style>
+    <!-- <style>
         .bg {
             background: linear-gradient(135deg, #2ecc71, #27ae60, #1abc9c);
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
         }
-    </style>
+    </style> -->
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -40,7 +40,7 @@
 
 </head>
 
-<body class="bg">
+<body class="bg-gradient-success">
 
     <div class="container">
 
@@ -76,7 +76,7 @@
                                             @enderror
                                         </div>
 
-                                        <button type="submit" class="btn btn-user btn-block text-white" style="background-color: #27ae60;">
+                                        <button type="submit" class="btn btn-user btn-block text-white bg-success">
                                             Login
                                         </button>
                                     </form>
@@ -126,7 +126,7 @@
         });
     </script>
     @endif
-    
+
     @if(session('error_session_expired'))
     <!-- SweetAlert untuk session expired -->
     <script>
@@ -164,7 +164,7 @@
         });
     </script>
     @endif
-    
+
     @if(session('status'))
     <!-- Sweetalerrt berhasil -->
     <script>

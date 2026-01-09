@@ -93,7 +93,7 @@ class AuthController extends Controller
         Cookie::queue(Cookie::forget('user_was_logged_in'));
         Cache::forget($userKey);
 
-        return redirect()->route('login')->with('success', 'Anda telah berhasil logout.');
+        return redirect()->route('login');
     }
 
     public function forgotPassword()

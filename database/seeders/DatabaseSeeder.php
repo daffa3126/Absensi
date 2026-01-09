@@ -19,25 +19,25 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Daffa',
             'email' => 'admin@gmail.com',
-            'password' => Hash::make('P@55word'),
+            'password' => Hash::make('password'),
             'role' => 'admin'
         ]);
 
-        // User::factory()->create([
-        //     'name' => 'Biya',
-        //     'email' => 'karyawan@gmail.com',
-        //     'password' => Hash::make('P@55word'),
-        //     'role' => 'karyawan'
-        // ]);
+        User::factory()->create([
+            'name' => 'Biya',
+            'email' => 'karyawan@gmail.com',
+            'password' => Hash::make('password'),
+            'role' => 'karyawan'
+        ]);
 
         // ================================================================
         // INI BAGIAN YANG DIUBAH
         // Kita akan membuat 500 user dengan role 'karyawan' secara otomatis.
         // Factory akan membuat nama dan email yang unik untuk setiap user.
         // ================================================================
-        User::factory()->count(500)->create([
-            'password' => Hash::make('P@55word'),
-            'role' => 'karyawan'
-        ]);
+        // User::factory()->count(500)->create([
+        //     'password' => Hash::make('P@55word'),
+        //     'role' => 'karyawan'
+        // ]);
     }
 }

@@ -11,7 +11,7 @@ class AdminProfileController extends Controller
     public function profile()
     {
         $user = Auth::user();
-        return view('admin.users.profile', compact('user'));
+        return view('admin.profile', compact('user'));
     }
 
     public function profileUpdate(Request $request, $id)
@@ -45,8 +45,7 @@ class AdminProfileController extends Controller
             // Simpan foto baru
             $file = $request->file('foto');
             $filename = time() . '_' . $file->getClientOriginalName();
-            // $file->move(public_path('img'), $filename);
-            $file->move($_SERVER['DOCUMENT_ROOT'] . '/img', $filename);
+            $file->move(public_path('img'), $filename);
             $user->foto = $filename;
         }
 

@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand topbar mb-4 static-top shadow" style="background-color: #2ecc71;">
-
+<!-- <nav class="navbar navbar-expand topbar mb-4 static-top shadow" style="background-color: #2ecc71;"> -->
+<nav class="navbar bg-light navbar-expand topbar mb-4 static-top shadow">
     <!-- Sidebar Toggle (Topbar) -->
     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3 bars-menu">
         <i class="fa fa-bars"></i>
@@ -12,9 +12,9 @@
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-3 d-none d-inline text-white small">{{ Auth::user()->name }}</span>
+                <span class="mr-3 d-none d-inline text-dark small">{{ Auth::user()->name }}</span>
                 <img class="img-profile rounded-circle"
-                    src="{{ asset('img/' . Auth::user()->foto)}}">
+                    src="{{ Auth::user()->default_foto}}">
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in user-dropdown-menu" aria-labelledby="userDropdown">

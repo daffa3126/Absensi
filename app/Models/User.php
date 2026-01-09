@@ -42,4 +42,11 @@ class User extends Authenticatable implements CanResetPasswordContract
     {
         $this->notify(new ResetPasswordNotification($token));
     }
+
+    public function getDefaultFotoAttribute()
+    {
+        return $this->foto
+            ? asset('img/' . $this->foto)
+            : asset('img/default.png');
+    }
 }

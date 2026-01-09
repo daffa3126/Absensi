@@ -3,14 +3,14 @@
 
 <head>
 
-    <style>
+    <!-- <style>
         .bg {
             background: linear-gradient(135deg, #2ecc71, #27ae60, #1abc9c);
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
         }
-    </style>
+    </style> -->
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -39,7 +39,7 @@
 
 </head>
 
-<body class="bg">
+<body class="bg-gradient-success">
     <div class="container">
 
         <!-- Outer Row -->
@@ -66,7 +66,7 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                        <button type="submit" class="btn btn-user btn-block text-white" style="background-color: #27ae60;">
+                                        <button type="submit" class="btn btn-user btn-block text-white bg-success">
                                             Kirim
                                         </button>
                                     </form>

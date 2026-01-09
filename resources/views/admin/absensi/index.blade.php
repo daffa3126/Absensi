@@ -18,7 +18,7 @@
                             <option value="{{ $m }}" {{ request('bulan') == $m ? 'selected' : '' }}>
                             {{ \Carbon\Carbon::create()->month($m)->locale('id')->translatedFormat('F') }}
                             </option>
-                        @endfor
+                            @endfor
                     </select>
                 </div>
                 <div class="col-md-3">
@@ -31,12 +31,12 @@
                     </select>
                 </div>
                 <div class="col-md-3 d-flex align-items-end mt-2">
-                    <button type="submit" class="btn text-white" style="background-color: #27ae60;">Filter</button>
-                    <a href="{{ route('admin.absensi.index') }}" class="btn text-white ml-2" style="background-color: #2ecc71;">Reset</a>
+                    <button type="submit" class="btn text-white bg-success">Filter</button>
+                    <a href="{{ route('admin.absensi.index') }}" class="btn text-white bg-success ml-2">Reset</a>
                 </div>
             </form>
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead class="text-white" style="background-color: #2ecc71;">
+                <thead class="text-white bg-success">
                     <tr>
                         <th>No</th>
                         <th>Nama Karyawan</th>

@@ -1,19 +1,19 @@
 .page-item.active .page-link {
-    background-color: #2ecc71!important;
+    background-color: #1cc88a!important;
     color: #fff !important;
-    border-color: #2ecc71!important;
+    border-color: #1cc88a!important;
 }
 
 .page-link {
-    color: #2ecc71;
+    color: #1cc88a;
 }
 
 .border-left {
-    border-left: 0.25rem solid #2ecc71!important;
+    border-left: 0.25rem solid #1cc88a!important;
 }
 
 .text-green {
-    color: #2ecc71!important;
+    color: #1cc88a!important;
 }
 
 /* =================================================== */

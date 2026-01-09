@@ -15,7 +15,7 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <a href="{{ route('admin.users.create') }}" class="btn text-white" style="background-color: #2ecc71;">
+        <a href="{{ route('admin.users.create') }}" class="btn text-white bg-success">
             <i class="fas fa-plus"></i>
             Tambah User
         </a>
@@ -23,7 +23,7 @@
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead class="text-white" style="background-color: #2ecc71;">
+                <thead class="text-white bg-success">
                     <tr>
                         <th>No</th>
                         <th>Nama</th>
