@@ -23,17 +23,19 @@ class SuratIzinController extends Controller
 
     public function create()
     {
+        // Menampillkan halaman view surat izin
         return view('karyawan.suratizin.create');
     }
 
     public function store(Request $request)
     {
+        // Memvalidasi field yang diisi user
         $request->validate([
-            // After or equal validasi untuk memastikan tanggal tidak di masa lalu
             'tanggal' => 'required|date|after_or_equal:today',
             'jenis' => 'required|in:sakit,izin',
             'alasan' => 'required|string'
         ], [
+        // Validasi error 
             'tanggal.required' => 'Tanggal harus diisi',
             'tanggal.after_or_equal' => 'Tanggal tidak boleh sebelum hari ini',
             'jenis.required' => 'Jenis surat harus diisi',
