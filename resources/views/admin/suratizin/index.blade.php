@@ -26,38 +26,20 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $surat->user->name }}</td>
-                        <td>{{ \Carbon\Carbon::parse($surat->tanggal)->locale('id')->translatedFormat('d F Y') }}</td>
+                        <td>{{ $surat->format_tanggal }}</td>
                         <td>{{ ucfirst($surat->jenis) }}</td>
                         <td>{{ $surat->alasan }}</td>
                         <td>
-                            @if($surat->status === 'disetujui')
-                            <span class="badge badge-success">Disetujui</span>
-                            @elseif($surat->status === 'belum disetujui')
-                            <span class="badge badge-warning">Belum Disetujui</span>
-                            @else
-                            <span class="badge badge-danger">Ditolak</span>
-                            @endif
+                            <span class="badge badge-{{ $surat->status_view['badge'] }}">
+                                {{ $surat->status_view['label'] }}
+                            </span>
                         </td>
                         <td>
                             <div class="d-flex justify-content-center align-items-center" style="gap: 8px;">
                                 <a href="{{ route('admin.suratizin.lihat', $surat->id) }}" target="_blank" class="btn btn-sm btn-info">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <!-- <form action="{{ route('admin.suratizin.setujui', $surat->id) }}" method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <button class="btn btn-sm btn-success">
-                                        <i class="fas fa-solid fa-check"></i>
-                                    </button>
-                                </form>
-                                <form action="{{ route('admin.suratizin.tolak', $surat->id) }}" method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <button class="btn btn-sm btn-danger">
-                                        <i class="fas fa-solid fa-times"></i>
-                                    </button>
-                                </form> -->
-                                @if($surat->status === 'belum disetujui')
+                                @if($surat->bisaDiproses())
                                 <form action="{{ route('admin.suratizin.setujui', $surat->id) }}" method="POST">
                                     @csrf
                                     @method('PUT')

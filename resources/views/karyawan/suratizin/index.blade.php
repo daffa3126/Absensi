@@ -34,13 +34,9 @@
                         <td>{{ ucfirst($surat->jenis) }}</td>
                         <td>{{ $surat->alasan }}</td>
                         <td>
-                            @if($surat->status === 'disetujui')
-                            <span class="badge badge-success">Disetujui</span>
-                            @elseif($surat->status === 'belum disetujui')
-                            <span class="badge badge-warning">Belum Disetujui</span>
-                            @else
-                            <span class="badge badge-danger">Ditolak</span>
-                            @endif
+                            <span class="badge badge-{{ $surat->status_view['badge'] }}">
+                                {{ $surat->status_view['label'] }}
+                            </span>
                         </td>
                         <td>
                             <div class="d-flex justify-content-center align-items-center" style="gap: 8px;">

@@ -52,31 +52,21 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $item->user->name }}</td>
-                        <td>{{ \Carbon\Carbon::parse($item->tanggal)->locale('id')->translatedFormat('d F Y') }}</td>
+                        <td>{{ $item->format_tanggal }}</td>
                         <td>{{ $item->jam_masuk ?? '-' }}</td>
                         <td>
-                            @if($item->status_masuk === 'Tepat Waktu')
-                            <span class="badge badge-success">{{ $item->status_masuk }}</span>
-                            @else
-                            <span class="badge badge-warning">{{ $item->status_masuk }}</span>
-                            @endif
+                            <span class="badge badge-{{ $item->status_masuk_badge }}">
+                                {{ $item->status_masuk }}
+                            </span>
                         </td>
                         <td>{{ $item->jam_keluar ?? '-' }}</td>
                         <td>
-                            @php
-                            $tanggalAbsensi = \Carbon\Carbon::parse($item->tanggal)->locale('id');
-                            @endphp
-
-                            @if(!$item->status_keluar)
-                            @if($tanggalAbsensi->isBefore(\Carbon\Carbon::today()))
-                            <span class="badge badge-danger">Tidak Absen</span>
+                            @if($item->status_keluar_view)
+                            <span class="badge badge-{{ $item->status_keluar_view['badge'] }}">
+                                {{ $item->status_keluar_view['label'] }}
+                            </span>
                             @else
-                            <span>-</span>
-                            @endif
-                            @elseif($item->status_keluar === 'Pulang')
-                            <span class="badge badge-success">{{ $item->status_keluar }}</span>
-                            @else
-                            <span>-</span>
+                            -
                             @endif
                         </td>
                     </tr>

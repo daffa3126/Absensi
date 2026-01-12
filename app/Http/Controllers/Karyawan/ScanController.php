@@ -25,7 +25,10 @@ class ScanController extends Controller
         // Memecah part jadi 3, Format: ABSEN|timestamp|hash
         $parts = explode('|', $qrData);
         if (count($parts) !== 3 || $parts[0] !== 'ABSEN') {
-            return response()->json(['status' => 'error', 'message' => 'Format QR tidak valid.']);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Format QR tidak valid.'
+            ]);
         }
 
         [$prefix, $timestamp, $hash] = $parts;
@@ -34,7 +37,10 @@ class ScanController extends Controller
 
         // Validasi hash
         if ($hash !== $expectedHash) {
-            return response()->json(['status' => 'error', 'message' => 'QR tidak valid (hash salah).']);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'QR tidak valid (hash salah).'
+            ]);
         }
 
         // Validasi waktu (maks 3 detik)
@@ -42,27 +48,26 @@ class ScanController extends Controller
         $qrTime = Carbon::createFromFormat('YmdHis', $timestamp);
         // Menghitung selisih waktu dengan qr code jika lebih dari 3 detik maka qr code sudah kedaluwarsa
         if ($now->diffInSeconds($qrTime) > 3) {
-            return response()->json(['status' => 'error', 'message' => 'QR sudah kedaluwarsa.']);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'QR sudah kedaluwarsa.'
+            ]);
         }
 
         // Cek absensi hari ini
-        $absensiHariIni = Absensi::where('user_id', $user->id)
-            ->whereDate('tanggal', $now->toDateString())
-            ->first();
-
-        $jamTepatWaktu = '08:00:00';
-        $jamPulang = '16:30:00';
+        $tanggal = $now->toDateString();
+        $jamSekarang = $now->format('H:i:s');
+        $absensiHariIni = Absensi::absensiHariIni($user->id, $tanggal);
 
         // === ABSEN MASUK ===
         if (!$absensiHariIni) {
-            $statusMasuk = ($now->format('H:i:s') <= $jamTepatWaktu) ? 'Tepat Waktu' : 'Terlambat';
-
+            $absensi = new Absensi();
             // Menyimpan data ke table absensi
             Absensi::create([
                 'user_id' => $user->id,
-                'tanggal' => $now->toDateString(),
-                'jam_masuk' => $now->format('H:i:s'),
-                'status_masuk' => $statusMasuk,
+                'tanggal' => $tanggal,
+                'jam_masuk' => $jamSekarang,
+                'status_masuk' => $absensi->statusMasuk($jamSekarang),
                 'waktu' => $now,
             ]);
 
@@ -76,14 +81,17 @@ class ScanController extends Controller
         // === ABSEN KELUAR ===
         if (!$absensiHariIni->jam_keluar) {
             // mengecek apakah sudah waktunya jam pulang, kalo belum muncul error
-            if ($now->format('H:i:s') < $jamPulang) {
-                return response()->json(['status' => 'error', 'message' => 'Belum waktunya pulang.']);
+            if (!$absensiHariIni->statusKeluar($jamSekarang)) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Belum waktunya pulang.'
+                ]);
             }
 
             // Set status keluar
             // Ambil waktu saat ini, dan mengubah ke format H:i:s jam menit detik
             $absensiHariIni->update([
-                'jam_keluar' => $now->format('H:i:s'),
+                'jam_keluar' => $jamSekarang,
                 'status_keluar' => 'Pulang',
             ]);
 

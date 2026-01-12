@@ -49,36 +49,22 @@
             <tbody>
                 @forelse($absensi as $index => $item)
                 <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d F Y') }}</td>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $item->format_tanggal }}</td>
                     <td>{{ $item->jam_masuk ?? '-' }}</td>
                     <td>
-                        @php
-                        $tanggalAbsensi = \Carbon\Carbon::parse($item->tanggal);
-                        @endphp
-
-                        @if(!$item->status_masuk && $tanggalAbsensi->isBefore(\Carbon\Carbon::today()))
-                        <span class="badge badge-danger">Tidak Absen</span>
-                        @elseif($item->status_masuk === 'Tepat Waktu')
-                        <span class="badge badge-success">{{ $item->status_masuk }}</span>
-                        @elseif($item->status_masuk === 'Terlambat')
-                        <span class="badge badge-warning">{{ $item->status_masuk }}</span>
-                        @else
-                        -
-                        @endif
+                        <span class="badge badge-{{ $item->status_masuk_badge }}">
+                            {{ $item->status_masuk }}
+                        </span>
                     </td>
                     <td>{{ $item->jam_keluar ?? '-' }}</td>
                     <td>
-                        @if(!$item->status_keluar)
-                        @if($tanggalAbsensi->isBefore(\Carbon\Carbon::today()))
-                        <span class="badge badge-danger">Tidak Absen</span>
+                        @if($item->status_keluar_view)
+                        <span class="badge badge-{{ $item->status_keluar_view['badge'] }}">
+                            {{ $item->status_keluar_view['label'] }}
+                        </span>
                         @else
-                        <span>-</span>
-                        @endif
-                        @elseif($item->status_keluar === 'Pulang')
-                        <span class="badge badge-success">{{ $item->status_keluar }}</span>
-                        @else
-                        <span>-</span>
+                        -
                         @endif
                     </td>
                 </tr>

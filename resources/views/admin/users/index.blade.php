@@ -42,11 +42,9 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td class="text-center">
-                            @if($user->role === 'admin')
-                            <span class="badge badge-success">admin</span>
-                            @else
-                            <span class="badge badge-primary">karyawan</span>
-                            @endif
+                            <span class="badge badge-{{ $user->role_view['badge'] }}">
+                                {{ $user->role_view['label'] }}
+                            </span>
                         </td>
                         <td>
                             <div class="d-flex justify-content-center align-items-center" style="gap: 8px;">

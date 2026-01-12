@@ -20,7 +20,7 @@ class AbsensiController extends Controller
             ->when($bulan, function ($query) use ($bulan) {
                 $query->whereMonth('tanggal', $bulan);
             })
-            // FIlter berdasarkan tahun
+            // Filter berdasarkan tahun
             ->when($tahun, function ($query) use ($tahun) {
                 $query->whereYear('tanggal', $tahun);
             })

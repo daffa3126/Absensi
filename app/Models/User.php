@@ -49,4 +49,18 @@ class User extends Authenticatable implements CanResetPasswordContract
             ? asset('img/' . $this->foto)
             : asset('img/default.png');
     }
+
+    public function getRoleViewAttribute()
+    {
+        return match ($this->role) {
+            'admin' => [
+                'label' => 'admin',
+                'badge' => 'success'
+            ],
+            default => [
+                'label' => 'karyawan',
+                'badge' => 'primary'
+            ],
+        };
+    }
 }

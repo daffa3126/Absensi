@@ -19,13 +19,14 @@ class SuratIzinController extends Controller
 
     public function setujui($id)
     {
+        // Mencari surat berdasarkan id user
         $surat = SuratIzin::findOrFail($id);
 
         // Menargetkan surat yang belum disetujui
-        if ($surat->status !== 'belum disetujui') {
-            return redirect()->route('admin.suratizin.index')
-                ->with('error', 'Surat sudah pernah diproses.');
-        }
+        // if ($surat->status !== 'belum disetujui') {
+        //     return redirect()->route('admin.suratizin.index')
+        //         ->with('error', 'Surat sudah pernah diproses.');
+        // }
 
         $surat->status = 'disetujui';
         $surat->save();
@@ -35,12 +36,13 @@ class SuratIzinController extends Controller
 
     public function tolak($id)
     {
+        // Mencari surat berdasarkan id user
         $surat = SuratIzin::findOrFail($id);
 
-        if ($surat->status !== 'belum disetujui') {
-            return redirect()->route('admin.suratizin.index')
-                ->with('error', 'Surat sudah pernah diproses.');
-        }
+        // if ($surat->status !== 'belum disetujui') {
+        //     return redirect()->route('admin.suratizin.index')
+        //         ->with('error', 'Surat sudah pernah diproses.');
+        // }
 
         $surat->status = 'ditolak';
         $surat->save();

@@ -61,7 +61,7 @@
                                         <div class="form-group">
                                             <input type="text" name="name" class="form-control form-control-user @error('name') is-invalid @enderror"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Masukkan nama" autocomplete="off">
+                                                placeholder="Masukkan nama" autocomplete="off" value="{{ old('name') }}">
                                             @error('name')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -69,7 +69,7 @@
                                         <div class="form-group">
                                             <input type="email" name="email" class="form-control form-control-user @error('email') is-invalid @enderror"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Masukkan email" autocomplete="off">
+                                                placeholder="Masukkan email" autocomplete="off" value="{{ old('email') }}">
                                             @error('email')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -79,6 +79,15 @@
                                             <input type="password" name="password" class="form-control form-control-user @error('password') is-invalid @enderror"
                                                 id="exampleInputPassword" placeholder="Masukkan password" autocomplete="new-password">
                                             @error('password')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="password" name="password_confirmation" class="form-control form-control-user @error('password_confirmation') is-invalid @enderror"
+                                                id="exampleInputPasswordConfirmation"
+                                                placeholder="Masukkan Konfirmasi Password" autocomplete="off">
+                                            @error('password_confirmation')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>

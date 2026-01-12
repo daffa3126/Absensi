@@ -36,14 +36,9 @@ class AuthController extends Controller
 
             if ($user->role === 'admin') {
                 return redirect()->route('admin.dashboard');
-            } elseif ($user->role === 'karyawan') {
-                return redirect()->route('karyawan.dashboard');
             } else {
-                Auth::logout();
-                return redirect()->route('auth.login')->withErrors([
-                    'email' => 'Role tidak dikenali'
-                ]);
-            }
+                return redirect()->route('karyawan.dashboard');
+            };
         }
 
         // Withinput biar data yg diinput tdk hilang
@@ -62,20 +57,21 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string|max:100',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string|min:6|confirmed',
         ], [
             'name.required' => 'Nama harus diisi',
             'email.required' => 'Email harus diisi',
             'email.unique' => 'Email sudah digunakan',
             'password.required' => 'Password harus diisi',
             'password.min' => 'Password minimal 6 karakter',
+            'password.confirmed' => 'Konfirmasi Password tidak sesuai'
         ]);
 
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'karyawan' // otomatis jadi customer
+            'role' => 'karyawan' // otomatis jadi karyawan
         ]);
 
         return redirect()->route('login')->with('success', 'Akun berhasil dibuat! Silahkan login');
@@ -104,6 +100,7 @@ class AuthController extends Controller
 
     public function sendResetLink(Request $request)
     {
+        // Validasi email yang diinput
         $request->validate([
             'email' => 'required|email'
         ], [
@@ -114,6 +111,7 @@ class AuthController extends Controller
             $request->only('email')
         );
 
+        // Alert success send reset link
         return $status === Password::RESET_LINK_SENT
             ? back()->with(['success' => __('Link Reset Password Berhasil Dikirim')])
             : back()->withErrors(['email' => __('Email tidak ditemukan')]);
@@ -126,6 +124,7 @@ class AuthController extends Controller
 
     public function resetPassword(Request $request)
     {
+        // Validasi input user
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
@@ -137,10 +136,12 @@ class AuthController extends Controller
             'password.confirmed' => 'Konfirmasi password tidak sesuai',
         ]);
 
+        // Field yang diperlukan untuk resep password
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function (User $user, string $password) {
 
+                // Cek apakah password sama dengan sebelumnya
                 if (Hash::check($password, $user->password)) {
                     throw ValidationException::withMessages([
                         'password' => 'Password tidak boleh sama dengan sebelumnya',

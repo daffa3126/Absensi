@@ -59,6 +59,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
+        // Mencari user berdasarkan id user
         $user = User::findOrFail($id);
         return view('admin.users.edit', compact('user'));
     }
@@ -89,6 +90,7 @@ class UserController extends Controller
 
     public function destroy($id)
     {
+        // Mencari user berdasarkan id user
         $user = User::findOrFail($id);
         $user->delete();
 
